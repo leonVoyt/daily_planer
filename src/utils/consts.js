@@ -1,0 +1,5 @@
+export const AUTH_ROUTE = '/'
+export const SETTINGS_ROUTE = '/settings'
+export const STATISTICS_ROUTE = '/statistics'
+export const INSTRUCTIONS_ROUTE = '/instructions'
+export const ABOUT_ROUTE = '/about'
