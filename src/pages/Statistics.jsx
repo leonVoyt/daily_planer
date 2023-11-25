@@ -7,6 +7,7 @@ const Statistics = inject('shop')(
     <section className="Page-cart">
       <h2>Your cart</h2>
       <section className="Page-cart-items">
+        {console.log(cart.entries)}
         {cart.entries.map((entry) => (
           <CartEntry key={entry.book.id} entry={entry} />
         ))}
@@ -28,35 +29,33 @@ const Statistics = inject('shop')(
 )
 
 const CartEntry = inject('shop')(
-  observer(({ shop, entry }) => (
-    <div className="Page-cart-item">
-      <p>
-        <a
-          href={`/book/${entry.book.id}`}
-          onClick={onEntryClick.bind(entry, shop)}
-        >
-          {entry.book.name}
-        </a>
-        <button onClick={() => entry.remove()}>Remove</button>
-      </p>
-      {!entry.book.isAvailable && (
+  observer(({ shop, entry }) => {
+    return (
+      <div className="Page-cart-item">
         <p>
-          <b>Not available anymore</b>
+          <a
+            href={`/book/${entry.book.id}`}
+            onClick={onEntryClick.bind(entry, shop)}
+          >
+            {entry.book.name}
+          </a>
+          <button onClick={() => entry.remove()}>Remove</button>
+          <button onClick={() => shop.cart.editMonthly(entry.book.id)}>
+            editMonthly
+          </button>
         </p>
-      )}
 
-      <div className="Page-cart-item-details">
-        <p>
-          Amount:
-          <input
-            value={entry.quantity}
-            onChange={updateEntryQuantity.bind(null, entry)}
-          />
-          total: <b>{entry.price} €</b>
-        </p>
+        <div className="Page-cart-item-details">
+          <p>
+            Amount: total expenses: <b>{entry.book.expenses} €</b>
+          </p>
+          <p>
+            total income: <b>{entry.book.income} €</b>
+          </p>
+        </div>
       </div>
-    </div>
-  ))
+    )
+  })
 )
 
 function onEntryClick(shop, e) {

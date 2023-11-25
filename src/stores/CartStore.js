@@ -6,16 +6,19 @@ import {
   applySnapshot,
   destroy,
 } from 'mobx-state-tree'
-import { Book } from './BookStore'
 
 const CartEntry = types
   .model('CartEntry', {
-    quantity: 0,
-    book: types.reference(Book),
+    book: types.model('test', {
+      id: types.string,
+      name: types.string,
+      expenses: types.number,
+      income: types.number,
+    }),
   })
   .views((self) => ({
     get price() {
-      return self.book.price * self.quantity
+      return self.book.income - self.book.expenses
     },
     get isValidBook() {
       return self.book.isAvailable
@@ -41,17 +44,12 @@ export const CartStore = types
     get shop() {
       return getParent(self)
     },
-    get subTotal() {
-      return self.entries.reduce((sum, e) => sum + e.price, 0)
-    },
-    get hasDiscount() {
-      return self.subTotal >= 100
-    },
-    get discount() {
-      return self.subTotal * (self.hasDiscount ? 0.1 : 0)
-    },
+
     get total() {
-      return self.subTotal - self.discount
+      return self.entries.reduce(
+        (sum, e) => sum + Number(e.book.income - e.book.expenses),
+        0
+      )
     },
     get canCheckout() {
       return (
@@ -78,14 +76,31 @@ export const CartStore = types
       }
     },
     addBook(book, quantity = 1, notify = true) {
-      let entry = self.entries.find((entry) => entry.book === book)
-      if (!entry) {
-        self.entries.push({ book: book })
-        entry = self.entries[self.entries.length - 1]
-      }
+      let entry = false
+
+      self.entries.push({
+        book: {
+          id: Math.random().toString(),
+          name: 'Leon',
+          expenses: 100,
+          income: 200,
+        },
+      })
+      entry = self.entries[self.entries.length - 1]
       entry.increaseQuantity(quantity)
       if (notify) self.shop.alert('Added to cart')
     },
+    editMonthly(id) {
+      let obj = {
+        expenses: 2200,
+        income: 500,
+      }
+
+      self.entries.forEach((el) =>
+        el.book.id === id ? (el.book = { ...el.book, ...obj }) : el.book
+      )
+    },
+
     remove(book) {
       destroy(book)
     },

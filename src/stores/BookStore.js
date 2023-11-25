@@ -5,11 +5,12 @@ export const Book = types.model('Book', {
   id: types.identifier,
   name: types.string,
   author: types.string,
-  series_t: types.optional(types.string, ''),
-  sequence_i: types.number,
-  genre_s: types.string,
-  pages_i: types.number,
-  price: types.number,
+
+  //   series_t: types.optional(types.string, ''),
+  //   sequence_i: types.number,
+  //   genre_s: types.string,
+  //   pages_i: types.number,
+  //   price: types.number,
   isAvailable: true,
 })
 
