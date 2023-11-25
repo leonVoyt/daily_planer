@@ -9,19 +9,27 @@ import {
 
 const CartEntry = types
   .model('CartEntry', {
-    book: types.model('test', {
+    monthlyPost: types.model('test', {
       id: types.string,
       name: types.string,
-      expenses: types.number,
       income: types.number,
+      expenses: types.number,
+      expensesCategories: types.array(
+        types.model('expensesCategories', {
+          id: types.number,
+          name: types.string,
+          value: types.number,
+        })
+      ),
+      monthlyTotal: types.number,
     }),
   })
   .views((self) => ({
     get price() {
-      return self.book.income - self.book.expenses
+      return self.monthlyPost.income - self.monthlyPost.expenses
     },
     get isValidBook() {
-      return self.book.isAvailable
+      return self.monthlyPost.isAvailable
     },
   }))
   .actions((self) => ({
@@ -47,7 +55,7 @@ export const CartStore = types
 
     get total() {
       return self.entries.reduce(
-        (sum, e) => sum + Number(e.book.income - e.book.expenses),
+        (sum, e) => sum + Number(e.monthlyPost.income - e.monthlyPost.expenses),
         0
       )
     },
@@ -75,16 +83,11 @@ export const CartStore = types
         )
       }
     },
-    addBook(book, quantity = 1, notify = true) {
+    addBook(monthlyPost, quantity = 1, notify = true) {
       let entry = false
 
       self.entries.push({
-        book: {
-          id: Math.random().toString(),
-          name: 'Leon',
-          expenses: 100,
-          income: 200,
-        },
+        monthlyPost: monthlyPost,
       })
       entry = self.entries[self.entries.length - 1]
       entry.increaseQuantity(quantity)
@@ -97,7 +100,9 @@ export const CartStore = types
       }
 
       self.entries.forEach((el) =>
-        el.book.id === id ? (el.book = { ...el.book, ...obj }) : el.book
+        el.monthlyPost.id === id
+          ? (el.monthlyPost = { ...el.monthlyPost, ...obj })
+          : el.monthlyPost
       )
     },
 
