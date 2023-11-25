@@ -4,6 +4,13 @@ import React, { useEffect, useState } from 'react'
 const Settings = inject('shop')(
   observer(({ shop }) => {
     const [income, setIncome] = useState(0)
+    const currentYear = new Date().getFullYear()
+
+    const [monthsList, setMonthsList] = useState([])
+
+    const [selectedMonth, setSelectedMonth] = useState(
+      `${months[new Date().getMonth()]}/${currentYear}`
+    )
 
     const [selectedOption, setSelectedOption] = useState('')
     const [isSelectedOptionChanged, setIsSelectedOptionChanged] =
@@ -35,7 +42,29 @@ const Settings = inject('shop')(
         value: 0,
       },
     ])
+    //
+    const handleChange = (event) => {
+      setSelectedMonth(event.target.value)
+    }
+    useEffect(() => {
+      generateMonthOptions()
+    }, [])
+    const generateMonthOptions = () => {
+      const startMonthIndex = -100 // November
+      const endMonthIndex = 11 // October of the next year
+      const options = []
+      for (let i = startMonthIndex; i <= endMonthIndex; i++) {
+        const monthIndex = ((i % 12) + 12) % 12 // Ensure the index is within the range [0, 11]
+        options.push(
+          <option key={i} value={i}>
+            {`${months[monthIndex]}/${currentYear + Math.floor(i / 12)}`}
+          </option>
+        )
+      }
+      setMonthsList(options.map((el) => el.props.children))
+    }
 
+    //
     const handleSelectChange = (event) => {
       setSelectedOption(event.target.value)
       setIsSelectedOptionChanged(!isSelectedOptionChanged)
@@ -84,12 +113,30 @@ const Settings = inject('shop')(
                 )}
               </div>
             )}
+            <div>
+              <label>Select Month: </label>
+              <select onChange={handleChange} value={selectedMonth}>
+                {monthsList.map((el) => (
+                  <option value={el} key={{ el }}>
+                    {el}
+                  </option>
+                ))}
+              </select>
+
+              <p>
+                You selected:{' '}
+                {/* {`${months[selectedMonth]}/${
+                  currentYear + Math.floor(selectedMonth / 12)
+                }`} */}
+                {selectedMonth}
+              </p>
+            </div>
           </div>
           <button
             onClick={() => {
               shop.cart.addBook({
                 id: Math.random().toString(),
-                name: 'Leon',
+                month: selectedMonth,
                 income: income,
                 expenses: expensesCategories.reduce(
                   (acc, curr) => acc + curr.value,

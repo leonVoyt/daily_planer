@@ -10,8 +10,7 @@ import {
 const CartEntry = types
   .model('CartEntry', {
     monthlyPost: types.model('test', {
-      id: types.string,
-      name: types.string,
+      month: types.string,
       income: types.number,
       expenses: types.number,
       expensesCategories: types.array(
@@ -33,12 +32,6 @@ const CartEntry = types
     },
   }))
   .actions((self) => ({
-    increaseQuantity(number) {
-      self.quantity += number
-    },
-    setQuantity(number) {
-      self.quantity = number
-    },
     remove() {
       getParent(self, 2).remove(self)
     },
@@ -59,12 +52,6 @@ export const CartStore = types
         0
       )
     },
-    get canCheckout() {
-      return (
-        self.entries.length > 0 &&
-        self.entries.every((entry) => entry.quantity > 0 && entry.isValidBook)
-      )
-    },
   }))
   .actions((self) => ({
     afterAttach() {
@@ -83,27 +70,22 @@ export const CartStore = types
         )
       }
     },
-    addBook(monthlyPost, quantity = 1, notify = true) {
-      let entry = false
-
-      self.entries.push({
-        monthlyPost: monthlyPost,
-      })
-      entry = self.entries[self.entries.length - 1]
-      entry.increaseQuantity(quantity)
-      if (notify) self.shop.alert('Added to cart')
-    },
-    editMonthly(id) {
-      let obj = {
-        expenses: 2200,
-        income: 500,
-      }
-
-      self.entries.forEach((el) =>
-        el.monthlyPost.id === id
-          ? (el.monthlyPost = { ...el.monthlyPost, ...obj })
-          : el.monthlyPost
+    addBook(monthlyPost, notify = true) {
+      let isAlreadyExist = self.entries.find(
+        (el) => el.monthlyPost.month === monthlyPost.month
       )
+      if (!isAlreadyExist) {
+        self.entries.push({
+          monthlyPost: monthlyPost,
+        })
+      } else {
+        self.entries.forEach((el) =>
+          el.monthlyPost.month === monthlyPost.month
+            ? (el.monthlyPost = { ...el.monthlyPost, ...monthlyPost })
+            : el.monthlyPost
+        )
+      }
+      if (notify) self.shop.alert('Added to cart')
     },
 
     remove(book) {

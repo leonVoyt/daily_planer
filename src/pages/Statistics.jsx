@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { observer, inject } from 'mobx-react'
+import TableModal from '../modals/TableModal'
 // import "./Cart.css"
 
 const Statistics = inject('shop')(
   observer(({ shop: { cart } }) => {
+    const [showModal, setShowModal] = useState(false)
+    const [currMonth, setCurrMonth] = useState('')
+
     return (
       <section className="overflow-x-hidden mx-2">
         <h2>Your cart</h2>
@@ -12,23 +16,21 @@ const Statistics = inject('shop')(
             <table className="w-full ">
               <thead>
                 <tr>
-                  {Object.keys(cart.entries[0].monthlyPost).map((el) => {
-                    if (el === 'expensesCategories') {
-                      return cart.entries[0].monthlyPost.expensesCategories.map(
-                        (insEl) => (
-                          <th className="border-2 border-gray-600">
-                            {insEl.name}
-                          </th>
-                        )
-                      )
-                    }
-                    return <th className="border-2 border-gray-600">{el}</th>
-                  })}
+                  {tHeadParams.map((el) => (
+                    <th className="border-2 border-gray-600" key={el.id}>
+                      {el.name}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
                 {cart.entries.map((entry) => (
-                  <tr onClick={() => entry.remove()}>
+                  <tr
+                    onClick={() => {
+                      setCurrMonth(entry.monthlyPost.month)
+                      setShowModal(!showModal)
+                    }}
+                  >
                     {Object.values(entry.monthlyPost).map((el) => {
                       if (Array.isArray(el)) {
                         return el.map((insEl) => (
@@ -44,7 +46,9 @@ const Statistics = inject('shop')(
                 ))}
               </tbody>
             </table>
-
+            {showModal && (
+              <TableModal setShowModal={setShowModal} month={currMonth} />
+            )}
             <p>
               <b>Total: {cart.total} €</b>
             </p>
@@ -95,8 +99,43 @@ function onEntryClick(shop, e) {
   return false
 }
 
-function updateEntryQuantity(entry, e) {
-  if (e.target.value) entry.setQuantity(Number(e.target.value))
-}
-
 export default Statistics
+
+const tHeadParams = [
+  {
+    id: 0,
+    name: 'Month',
+  },
+  {
+    id: 1,
+    name: 'Income',
+  },
+  {
+    id: 2,
+    name: 'Expenses',
+  },
+  {
+    id: 3,
+    name: 'Other',
+  },
+  {
+    id: 4,
+    name: 'Food',
+  },
+  {
+    id: 5,
+    name: 'Entertainment',
+  },
+  {
+    id: 6,
+    name: 'Transport',
+  },
+  {
+    id: 7,
+    name: 'Rent',
+  },
+  {
+    id: 8,
+    name: 'Monthly Total',
+  },
+]
