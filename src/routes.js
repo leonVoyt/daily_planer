@@ -4,7 +4,6 @@ import Instructions from './pages/Instructions'
 import Settings from './pages/Settings'
 import Statistics from './pages/Statistics'
 
-import { Navigate } from 'react-router-dom'
 import {
   ABOUT_ROUTE,
   AUTH_ROUTE,
@@ -12,7 +11,6 @@ import {
   SETTINGS_ROUTE,
   STATISTICS_ROUTE,
 } from './utils/consts'
-import BookDetails from './components/BookDetails'
 
 export const publicRoutes = [
   {
@@ -36,9 +34,4 @@ export const publicRoutes = [
     path: ABOUT_ROUTE,
     element: <AboutMe />,
   },
-  {
-    path: '/:id',
-    element: <BookDetails />,
-  },
-  //   { path: '*', element: <Navigate to={AUTH_ROUTE} />, exact: true },
 ]

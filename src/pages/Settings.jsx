@@ -1,8 +1,8 @@
 import { inject, observer } from 'mobx-react'
 import React, { useEffect, useState } from 'react'
 
-const Settings = inject('shop')(
-  observer(({ shop }) => {
+const Settings = inject('budget')(
+  observer(({ budget }) => {
     const [income, setIncome] = useState(0)
     const currentYear = new Date().getFullYear()
 
@@ -134,7 +134,7 @@ const Settings = inject('shop')(
           </div>
           <button
             onClick={() => {
-              shop.cart.addBook({
+              budget.monthlyPosts.addBook({
                 id: Math.random().toString(),
                 month: selectedMonth,
                 income: income,
@@ -149,7 +149,7 @@ const Settings = inject('shop')(
               })
             }}
           >
-            Add to cart
+            Add to monthlyPosts
           </button>
         </div>
       </section>

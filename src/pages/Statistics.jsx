@@ -1,56 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { observer, inject } from 'mobx-react'
-import TableModal from '../modals/TableModal'
-// import "./Cart.css"
+import { TableView } from '../organism/TableViev'
+import { TableViewType } from '../hooks/useTableView'
+import { getCurrency } from '../API/currency'
+// import "./monthlyPosts.css"
 
-const Statistics = inject('shop')(
-  observer(({ shop: { cart } }) => {
-    const [showModal, setShowModal] = useState(false)
-    const [currMonth, setCurrMonth] = useState('')
+const Statistics = inject('budget')(
+  observer(({ budget: { monthlyPosts, currancy } }) => {
+    useEffect(() => {
+      getCurrency('USD').then((data) => console.log(data))
+    }, [])
 
+    //formated monthlyPost
+    const formatedData = monthlyPosts.entries.map((el) =>
+      el.monthlyPost.expensesCategories.reduce(
+        (acc, category) => {
+          acc[category.name] = category.value
+          return acc
+        },
+        {
+          month: el.monthlyPost.month,
+          income: el.monthlyPost.income,
+          expenses: el.monthlyPost.expenses,
+          monthlyTotal: el.monthlyPost.monthlyTotal,
+        }
+      )
+    )
     return (
-      <section className="overflow-x-hidden mx-2">
-        <h2>Your cart</h2>
-        {cart.entries.length ? (
+      <section className="mx-2">
+        <h2>Your Statistics</h2>
+        {monthlyPosts.entries.length ? (
           <>
-            <table className="w-full ">
-              <thead>
-                <tr>
-                  {tHeadParams.map((el) => (
-                    <th className="border-2 border-gray-600" key={el.id}>
-                      {el.name}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {cart.entries.map((entry) => (
-                  <tr
-                    onClick={() => {
-                      setCurrMonth(entry.monthlyPost.month)
-                      setShowModal(!showModal)
-                    }}
-                  >
-                    {Object.values(entry.monthlyPost).map((el) => {
-                      if (Array.isArray(el)) {
-                        return el.map((insEl) => (
-                          <td className="border-2 border-gray-600">
-                            {insEl.value}
-                          </td>
-                        ))
-                      }
-                      return <td className="border-2 border-gray-600">{el}</td>
-                    })}
-                    <th></th>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {showModal && (
-              <TableModal setShowModal={setShowModal} month={currMonth} />
-            )}
+            <TableView
+              data={formatedData ?? []}
+              viewType={TableViewType.SymbolSearch}
+            />
+
             <p>
-              <b>Total: {cart.total} €</b>
+              <b>
+                Total:{' '}
+                <span className={getColor(monthlyPosts.total)}>
+                  {(monthlyPosts.total * currancy.currencies.value).toFixed(2)}{' '}
+                  {currancy.currencies.letterCode}
+                </span>
+              </b>
             </p>
           </>
         ) : (
@@ -61,26 +54,30 @@ const Statistics = inject('shop')(
   })
 )
 
-const CartEntry = inject('shop')(
-  observer(({ shop, entry }) => {
+const monthlyPostsEntry = inject('budget')(
+  observer(({ budget, entry }) => {
     return (
       <div className="border-2 border-gray-600">
         <p>
           <a
             href={`/book/${entry.monthlyPost.id}`}
-            onClick={onEntryClick.bind(entry, shop)}
+            onClick={onEntryClick.bind(entry, budget)}
           >
             {entry.monthlyPost.name}
           </a>
           <div className="flex gap-5">
             <button onClick={() => entry.remove()}>Remove</button>
-            <button onClick={() => shop.cart.editMonthly(entry.monthlyPost.id)}>
+            <button
+              onClick={() =>
+                budget.monthlyPosts.editMonthly(entry.monthlyPost.id)
+              }
+            >
               editMonthly
             </button>
           </div>
         </p>
 
-        <div className="Page-cart-item-details">
+        <div className="Page-monthlyPosts-item-details">
           <p>
             Amount: total expenses: <b>{entry.monthlyPost.expenses} €</b>
           </p>
@@ -93,49 +90,19 @@ const CartEntry = inject('shop')(
   })
 )
 
-function onEntryClick(shop, e) {
-  shop.view.openBookPage(this.monthlyPost)
+function onEntryClick(budget, e) {
+  budget.view.openBookPage(this.monthlyPost)
   e.preventDefault()
   return false
 }
 
 export default Statistics
 
-const tHeadParams = [
-  {
-    id: 0,
-    name: 'Month',
-  },
-  {
-    id: 1,
-    name: 'Income',
-  },
-  {
-    id: 2,
-    name: 'Expenses',
-  },
-  {
-    id: 3,
-    name: 'Other',
-  },
-  {
-    id: 4,
-    name: 'Food',
-  },
-  {
-    id: 5,
-    name: 'Entertainment',
-  },
-  {
-    id: 6,
-    name: 'Transport',
-  },
-  {
-    id: 7,
-    name: 'Rent',
-  },
-  {
-    id: 8,
-    name: 'Monthly Total',
-  },
-]
+//to do
+// 1 key problem
+// 2 update only where !=0
+// 3 Rename
+
+export const getColor = (value) => {
+  return value > 0 ? 'text-green-600' : 'text-red-600'
+}

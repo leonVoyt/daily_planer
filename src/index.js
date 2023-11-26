@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import App from './App'
 import { Provider } from 'mobx-react'
-import { ShopStore } from './stores/ShopStore'
+import { BudgetStore } from './stores/BudgetStore'
 
 const fetcher = (url) => window.fetch(url).then((response) => response.json())
-const shop = ShopStore.create(
+const budget = BudgetStore.create(
   {},
   {
     fetch: fetcher,
@@ -16,7 +16,7 @@ const shop = ShopStore.create(
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-  <Provider shop={shop}>
+  <Provider budget={budget}>
     <React.StrictMode>
       <App />
     </React.StrictMode>

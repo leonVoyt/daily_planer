@@ -7,9 +7,9 @@ import {
   destroy,
 } from 'mobx-state-tree'
 
-const CartEntry = types
-  .model('CartEntry', {
-    monthlyPost: types.model('test', {
+const MonthlyPostsEntry = types
+  .model('MonthlyPostsEntry', {
+    monthlyPost: types.model('monthlyPost', {
       month: types.string,
       income: types.number,
       expenses: types.number,
@@ -27,9 +27,6 @@ const CartEntry = types
     get price() {
       return self.monthlyPost.income - self.monthlyPost.expenses
     },
-    get isValidBook() {
-      return self.monthlyPost.isAvailable
-    },
   }))
   .actions((self) => ({
     remove() {
@@ -37,12 +34,12 @@ const CartEntry = types
     },
   }))
 
-export const CartStore = types
-  .model('CartStore', {
-    entries: types.array(CartEntry),
+export const MonthlyPostsStore = types
+  .model('MonthlyPostsStore', {
+    entries: types.array(MonthlyPostsEntry),
   })
   .views((self) => ({
-    get shop() {
+    get budget() {
       return getParent(self)
     },
 
@@ -56,18 +53,15 @@ export const CartStore = types
   .actions((self) => ({
     afterAttach() {
       if (typeof window !== 'undefined' && window.localStorage) {
-        when(
-          () => !self.shop.isLoading,
-          () => {
-            self.readFromLocalStorage()
-            reaction(
-              () => getSnapshot(self),
-              (json) => {
-                window.localStorage.setItem('cart', JSON.stringify(json))
-              }
-            )
-          }
-        )
+        when(() => {
+          self.readFromLocalStorage()
+          reaction(
+            () => getSnapshot(self),
+            (json) => {
+              window.localStorage.setItem('monthlyPosts', JSON.stringify(json))
+            }
+          )
+        })
       }
     },
     addBook(monthlyPost, notify = true) {
@@ -85,22 +79,17 @@ export const CartStore = types
             : el.monthlyPost
         )
       }
-      if (notify) self.shop.alert('Added to cart')
+      if (notify) self.budget.alert('Added to Statistics')
     },
 
     remove(book) {
       destroy(book)
     },
-    checkout() {
-      const total = self.total
-      self.clear()
-      self.shop.alert(`Bought books for ${total} € !`)
-    },
     clear() {
       self.entries.clear()
     },
     readFromLocalStorage() {
-      const cartData = window.localStorage.getItem('cart')
-      if (cartData) applySnapshot(self, JSON.parse(cartData))
+      const monthlyPostData = window.localStorage.getItem('monthlyPosts')
+      if (monthlyPostData) applySnapshot(self, JSON.parse(monthlyPostData))
     },
   }))

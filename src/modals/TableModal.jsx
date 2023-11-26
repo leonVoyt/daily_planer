@@ -1,8 +1,8 @@
 import { inject, observer } from 'mobx-react'
 import React, { useState } from 'react'
 
-const TableModal = inject('shop')(
-  observer(({ shop, month, setShowModal }) => {
+const TableModal = inject('budget')(
+  observer(({ budget, month, setShowModal }) => {
     const [income, setIncome] = useState(0)
     const [inputValue, setInputValue] = useState('')
     const [expensesCategories, setExpensesCategories] =
@@ -27,7 +27,7 @@ const TableModal = inject('shop')(
       })
     }
     const handleClick = () => {
-      shop.cart.addBook({
+      budget.monthlyPosts.addBook({
         month: month,
         income: income,
         expenses: expensesCategories.reduce((acc, curr) => acc + curr.value, 0),
@@ -50,7 +50,7 @@ const TableModal = inject('shop')(
           <h1 className="font-bold text-xl">{month}</h1>
           <div className="flex flex-col gap-2">
             <div>
-              <label htmlFor="income">income</label>
+              <label htmlFor="income">Income in UAH</label>
               <div>
                 <input
                   type="number"
