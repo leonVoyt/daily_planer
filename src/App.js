@@ -8,8 +8,10 @@ const App = inject('budget')(
   observer(({ budget: { auth } }) => {
     return (
       <BrowserRouter>
-        {auth.isAuth && <NavBar />}
-        <AppRouter />
+        <section className="min-h-screen ">
+          {auth.isAuth && <NavBar />}
+          <AppRouter />
+        </section>
       </BrowserRouter>
     )
   })

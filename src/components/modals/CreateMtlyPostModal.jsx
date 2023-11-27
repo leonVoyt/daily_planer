@@ -1,9 +1,9 @@
 import { inject, observer } from 'mobx-react'
 import React, { useEffect, useState } from 'react'
-import { months } from '../../pages/Settings'
+import { months } from '../pages/Settings'
 
-const TableModal = inject('budget')(
-  observer(({ budget, month, setShowModal }) => {
+const CreateMtlyPostModal = inject('budget')(
+  observer(({ budget, setShowModal }) => {
     const [income, setIncome] = useState(0)
     const [inputValue, setInputValue] = useState('')
     const [expensesCategories, setExpensesCategories] =
@@ -37,7 +37,7 @@ const TableModal = inject('budget')(
     }
     const handleClick = () => {
       budget.monthlyPosts.addBook({
-        month: month,
+        month: selectedMonth,
         income: income,
         expenses: expensesCategories.reduce((acc, curr) => acc + curr.value, 0),
         expensesCategories,
@@ -71,10 +71,10 @@ const TableModal = inject('budget')(
         onClick={() => setShowModal(false)}
       >
         <div
-          className=" relative border-2 border-white w-1/2 h-1/3 flex flex-col items-center justify-around rounded-md bg-blue-600 text-white"
+          className=" relative border-2 border-white w-1/2 h-1/2 flex flex-col items-center justify-around rounded-md bg-blue-600 text-white"
           onClick={(e) => e.stopPropagation()}
         >
-          <h1 className="font-bold text-xl">{month}</h1>
+          <h1 className="font-bold text-xl">{selectedMonth}</h1>
           <div className="flex flex-col gap-2">
             <div>
               <label htmlFor="income">Income in UAH</label>
@@ -118,15 +118,21 @@ const TableModal = inject('budget')(
           </div>
           <div>
             <label>Select Month: </label>
-            <select onChange={handleChange} value={selectedMonth}>
+            <select
+              onChange={handleChange}
+              value={selectedMonth}
+              className="bg-transparent"
+            >
               {monthsList.map((el) => (
-                <option value={el} key={{ el }}>
+                <option
+                  value={el}
+                  key={el}
+                  className="bg-transparent text-blue-600"
+                >
                   {el}
                 </option>
               ))}
             </select>
-
-            <p>You selected: {selectedMonth}</p>
           </div>
           <button
             className="bg-white text-black py-1.5 px-3 rounded-3xl hover:bg-yellow-500  bottom-0 "
@@ -140,7 +146,7 @@ const TableModal = inject('budget')(
   })
 )
 
-export default TableModal
+export default CreateMtlyPostModal
 
 const expensesOptions = [
   {

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import money from '../assets/money.svg'
-import bgBudget from '../assets/Budget-Transparent.png'
+import money from '../../assets/money.svg'
+import bgBudget from '../../assets/Budget-Transparent.png'
 import { inject, observer } from 'mobx-react'
 import { useNavigate } from 'react-router-dom'
-import { SETTINGS_ROUTE } from '../utils/consts'
+import { SETTINGS_ROUTE } from '../../utils/consts'
 
 const Auth = inject('budget')(
   observer(({ budget: { auth } }) => {

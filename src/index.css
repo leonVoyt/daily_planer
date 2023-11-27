@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.auth__bg {
-}
-@media screen and (max-width: 621px) {
-  .auth__bg {
-    display: none;
-  }
+* {
+  box-sizing: border-box;
 }

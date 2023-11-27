@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { useMemo } from 'react'
-import { getColor } from '../pages/Statistics'
+import { getColor } from '../components/pages/Statistics'
 
 export const useMonthlyTable = (currancy) => {
   const columnHelper = createColumnHelper()

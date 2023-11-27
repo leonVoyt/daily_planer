@@ -7,7 +7,7 @@ const NavBar = inject('budget')(
   observer(({ budget: { auth } }) => {
     const history = useNavigate()
     return (
-      <div className="flex min-w-screen justify-between px-5 bg-blue-600 h-14 items-center text-white">
+      <nav className="flex min-w-screen justify-between px-5 bg-blue-600 h-14 items-center text-white fixed w-screen">
         <div>
           {publicRoutes.map(({ path, element }) => (
             <button key={path} onClick={() => history(path)}>
@@ -21,7 +21,7 @@ const NavBar = inject('budget')(
         >
           Logout
         </button>
-      </div>
+      </nav>
     )
   })
 )

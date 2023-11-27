@@ -1,9 +1,4 @@
 import { Navigate } from 'react-router-dom'
-import AboutMe from './pages/AboutMe'
-import Auth from './pages/Auth'
-import Instructions from './pages/Instructions'
-import Settings from './pages/Settings'
-import Statistics from './pages/Statistics'
 
 import {
   ABOUT_ROUTE,
@@ -12,6 +7,11 @@ import {
   SETTINGS_ROUTE,
   STATISTICS_ROUTE,
 } from './utils/consts'
+import Settings from './components/pages/Settings'
+import Statistics from './components/pages/Statistics'
+import Instructions from './components/pages/Instructions'
+import AboutMe from './components/pages/AboutMe'
+import Auth from './components/pages/Auth'
 
 export const publicRoutes = [
   {

@@ -68,16 +68,16 @@ export const MonthlyPostsStore = types
       let isAlreadyExist = self.entries.find(
         (el) => el.monthlyPost.month === monthlyPost.month
       )
+
       if (!isAlreadyExist) {
         self.entries.push({
           monthlyPost: monthlyPost,
         })
       } else {
-        self.entries.forEach((el) =>
-          el.monthlyPost.month === monthlyPost.month
-            ? (el.monthlyPost = { ...el.monthlyPost, ...monthlyPost })
-            : el.monthlyPost
-        )
+        isAlreadyExist.monthlyPost = {
+          ...isAlreadyExist.monthlyPost,
+          ...monthlyPost,
+        }
       }
       if (notify) self.budget.alert('Added to Statistics')
     },

@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { observer, inject } from 'mobx-react'
-import { TableView } from '../organism/TableViev'
-import { TableViewType } from '../hooks/useTableView'
-import { getCurrency } from '../API/currency'
-// import "./monthlyPosts.css"
+import { TableView } from '../../organism/TableViev'
+import { TableViewType } from '../../hooks/useTableView'
+import { getCurrency } from '../../API/currency'
+import CreateMtlyPostModal from '../modals/CreateMtlyPostModal'
 
 const Statistics = inject('budget')(
   observer(({ budget: { monthlyPosts, currancy } }) => {
-    useEffect(() => {
-      getCurrency('USD').then((data) => console.log(data))
-    }, [])
+    const [showModal, setShowModal] = useState(false)
 
     //formated monthlyPost
     const formatedData = monthlyPosts.entries.map((el) =>
@@ -27,28 +25,31 @@ const Statistics = inject('budget')(
       )
     )
     return (
-      <section className="mx-2">
-        <h2>Your Statistics</h2>
-        {monthlyPosts.entries.length ? (
-          <>
-            <TableView
-              data={formatedData ?? []}
-              viewType={TableViewType.SymbolSearch}
-            />
+      <section className="px-2 pt-14 bg-pink-100 min-h-screen">
+        <>
+          <TableView
+            data={formatedData ?? []}
+            viewType={TableViewType.SymbolSearch}
+          />
 
-            <p>
-              <b>
-                Total:{' '}
-                <span className={getColor(monthlyPosts.total)}>
-                  {(monthlyPosts.total * currancy.currencies.value).toFixed(2)}{' '}
-                  {currancy.currencies.letterCode}
-                </span>
-              </b>
-            </p>
-          </>
-        ) : (
-          <h1>empy list</h1>
-        )}
+          <p className="pt-5">
+            <b>
+              Total:{' '}
+              <span className={getColor(monthlyPosts.total)}>
+                {(monthlyPosts.total * currancy.currencies.value).toFixed(2)}{' '}
+                {currancy.currencies.letterCode}
+              </span>
+            </b>
+          </p>
+
+          <button
+            onClick={() => setShowModal(!showModal)}
+            className="px-2 py-1.5 bg-green-600 rounded-md text-white mt-5 hover:opacity-70"
+          >
+            Create new post
+          </button>
+          {showModal && <CreateMtlyPostModal setShowModal={setShowModal} />}
+        </>
       </section>
     )
   })
