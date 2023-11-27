@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom'
 import AboutMe from './pages/AboutMe'
 import Auth from './pages/Auth'
 import Instructions from './pages/Instructions'
@@ -14,11 +15,6 @@ import {
 
 export const publicRoutes = [
   {
-    path: AUTH_ROUTE,
-    element: <Auth />,
-    exact: true,
-  },
-  {
     path: SETTINGS_ROUTE,
     element: <Settings />,
   },
@@ -34,4 +30,13 @@ export const publicRoutes = [
     path: ABOUT_ROUTE,
     element: <AboutMe />,
   },
+  { path: '*', element: <Navigate to={SETTINGS_ROUTE} />, exact: true },
+]
+export const notAuthRoutes = [
+  {
+    path: AUTH_ROUTE,
+    element: <Auth />,
+    exact: true,
+  },
+  { path: '*', element: <Navigate to={AUTH_ROUTE} />, exact: true },
 ]

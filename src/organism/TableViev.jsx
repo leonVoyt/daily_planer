@@ -8,7 +8,7 @@ import {
 import { useTableView } from '../hooks/useTableView'
 import TableHeaderColumn from '../components/TableHeaderColumn'
 import { inject, observer } from 'mobx-react'
-import TableModal from '../modals/TableModal'
+import TableModal from '../components/modals/TableModal'
 export const TableView = inject('budget')(
   observer(({ budget: { currancy }, data, viewType }) => {
     console.log(currancy.currencies.value)

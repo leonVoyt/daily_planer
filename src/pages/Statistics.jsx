@@ -98,11 +98,11 @@ function onEntryClick(budget, e) {
 
 export default Statistics
 
-//to do
-// 1 key problem
-// 2 update only where !=0
-// 3 Rename
-
 export const getColor = (value) => {
   return value > 0 ? 'text-green-600' : 'text-red-600'
 }
+
+//to do
+// 1 key problem
+// 2 update only where !=0
+// 3 Create modal for create new post

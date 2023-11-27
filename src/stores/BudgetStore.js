@@ -1,6 +1,7 @@
 import { types, getEnv } from 'mobx-state-tree'
 import { CurrencyStore } from './CurrencyStore'
 import { MonthlyPostsStore } from './MonthlyPostsStore'
+import { AuthStore } from './AuthStore'
 
 export const BudgetStore = types
   .model('BudgetStore', {
@@ -9,6 +10,9 @@ export const BudgetStore = types
     }),
     monthlyPosts: types.optional(MonthlyPostsStore, {
       entries: [],
+    }),
+    auth: types.optional(AuthStore, {
+      isAuth: false,
     }),
   })
   .views((self) => ({

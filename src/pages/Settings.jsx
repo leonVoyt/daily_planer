@@ -73,6 +73,7 @@ const Settings = inject('budget')(
     return (
       <section className="Page-books">
         <h1>Available books</h1>
+
         <div className="">
           <label htmlFor="income">income</label>
           <input
@@ -83,9 +84,9 @@ const Settings = inject('budget')(
           />
 
           <div>
-            <label htmlFor="dropdown">Select an expenses option:</label>
+            <label htmlFor="expensesDropdown">Select an expenses option:</label>
             <select
-              id="dropdown"
+              id="expensesDropdown"
               value={selectedOption}
               onChange={handleSelectChange}
             >
@@ -98,7 +99,6 @@ const Settings = inject('budget')(
 
             {selectedOption && (
               <div>
-                {/* You can add input fields or any other elements based on the selected option */}
                 {selectedOption !== '--Select--' && (
                   <input
                     type="number"
@@ -123,13 +123,7 @@ const Settings = inject('budget')(
                 ))}
               </select>
 
-              <p>
-                You selected:{' '}
-                {/* {`${months[selectedMonth]}/${
-                  currentYear + Math.floor(selectedMonth / 12)
-                }`} */}
-                {selectedMonth}
-              </p>
+              <p>You selected: {selectedMonth}</p>
             </div>
           </div>
           <button
@@ -159,7 +153,7 @@ const Settings = inject('budget')(
 
 export default Settings
 
-const expensesOptions = [
+export const expensesOptions = [
   {
     id: 0,
     name: '--Select--',
@@ -185,7 +179,7 @@ const expensesOptions = [
     name: 'Other',
   },
 ]
-const months = [
+export const months = [
   'January',
   'February',
   'March',

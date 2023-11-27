@@ -30,10 +30,6 @@ export const CurrencyStore = types
     // Asynchronous action to fetch currency values from an API
     fetchCurrencyValues: flow(function* (currName) {
       try {
-        // self.isLoading = true
-
-        // Simulate API call or fetch currency values from a real API
-
         const data = yield getCurrency(currName)
 
         // Update currency values in the store
@@ -41,7 +37,6 @@ export const CurrencyStore = types
       } catch (error) {
         console.error('Error fetching currency values:', error)
       } finally {
-        // self.isLoading = false
       }
     }),
     readFromLocalStorage() {
