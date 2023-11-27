@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { observer, inject } from 'mobx-react'
 import { TableView } from '../../organism/TableViev'
 import { TableViewType } from '../../hooks/useTableView'
-import { getCurrency } from '../../API/currency'
 import CreateMtlyPostModal from '../modals/CreateMtlyPostModal'
 
 const Statistics = inject('budget')(

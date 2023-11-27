@@ -11,8 +11,8 @@ const Instructions = () => {
           </h2>
           <ul className="list-decimal">
             <li className="mb-4">
-              <span className="font-bold">1. Authorization Page:</span> Visit
-              the app and go to the "Authorization" page. Use the following
+              <span className="font-bold">Authorization Page:</span> Visit the
+              app and go to the "Authorization" page. Use the following
               credentials:
               <ul className="list-disc ml-6 mt-2">
                 <li>Login: testLogin22</li>
@@ -21,9 +21,7 @@ const Instructions = () => {
               Click the login button to access the app.
             </li>
             <li className="mb-4">
-              <span className="font-bold">
-                2. Settings and Data Entry Page:
-              </span>{' '}
+              <span className="font-bold">Settings and Data Entry Page:</span>{' '}
               After logging in, navigate to the "Settings" page. Enter data for
               the reporting month:
               <ul className="list-disc ml-6 mt-2">
@@ -35,7 +33,7 @@ const Instructions = () => {
               </ul>
             </li>
             <li className="mb-4">
-              <span className="font-bold">3. Statistics Page:</span> Head to the
+              <span className="font-bold">Statistics Page:</span> Head to the
               "Statistics" page to view your financial information.
               <ul className="list-disc ml-6 mt-2">
                 <li>
@@ -52,22 +50,21 @@ const Instructions = () => {
                 </li>
                 <li>
                   <span className="font-semibold">Manage Data:</span> Update or
-                  delete data for a specific reporting month. Add information
-                  for a month where data is missing.
+                  delete data when you click on a specific reporting month. Add
+                  information for a month where data is missing.
                 </li>
               </ul>
             </li>
             <li className="mb-4">
-              <span className="font-bold">4. Instruction Page:</span> Explore
-              the "Instructions" page for detailed guidance on using the
+              <span className="font-bold">Instruction Page:</span> Explore the
+              "Instructions" page for detailed guidance on using the
               application. Learn more about the app and find information on the
               technologies used.
             </li>
             <li className="mb-4">
-              <span className="font-bold">5. About Page:</span> Visit the
-              "About" page to learn about the developer's background,
-              experience, and skills. Find links to the developer's portfolio or
-              previous works.
+              <span className="font-bold">About Page:</span> Visit the "About"
+              page to learn about the developer's background, experience, and
+              skills. Find links to the developer's portfolio or previous works.
             </li>
           </ul>
         </div>

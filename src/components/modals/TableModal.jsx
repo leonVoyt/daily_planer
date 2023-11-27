@@ -76,12 +76,12 @@ const TableModal = inject('budget')(
         onClick={() => setShowModal(false)}
       >
         <div
-          className=" relative border-2 border-white w-1/2 h-1/3 flex flex-col items-center justify-around rounded-md bg-blue-600 text-white"
+          className="relative border-2 border-white w-1/2 h-1/3 flex flex-col items-center justify-around rounded-md bg-blue-600 text-white"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-col gap-4">
             <h1 className="font-bold text-2xl">{currPost.month}</h1>
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-5 ">
               <div>
                 <label htmlFor="income">Income in UAH</label>
                 <div>
