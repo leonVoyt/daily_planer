@@ -55,7 +55,7 @@ const TableModal = inject('budget')(
       })
     }
     const handleClick = () => {
-      budget.monthlyPosts.addBook({
+      budget.monthlyPosts.addPost({
         month: currPost.month,
         income: income,
         expenses: expensesCategories.reduce((acc, curr) => acc + curr.value, 0),

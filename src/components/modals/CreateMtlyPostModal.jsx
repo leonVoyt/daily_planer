@@ -36,7 +36,7 @@ const CreateMtlyPostModal = inject('budget')(
       })
     }
     const handleClick = () => {
-      budget.monthlyPosts.addBook({
+      budget.monthlyPosts.addPost({
         month: selectedMonth,
         income: income,
         expenses: expensesCategories.reduce((acc, curr) => acc + curr.value, 0),

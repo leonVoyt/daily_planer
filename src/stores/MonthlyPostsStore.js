@@ -59,7 +59,7 @@ export const MonthlyPostsStore = types
         })
       }
     },
-    addBook(monthlyPost, notify = true) {
+    addPost(monthlyPost, notify = true) {
       let isAlreadyExist = self.entries.find(
         (el) => el.monthlyPost.month === monthlyPost.month
       )

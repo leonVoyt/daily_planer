@@ -1,4 +1,3 @@
-// CurrencyStore.js
 import { types, flow, getSnapshot, applySnapshot } from 'mobx-state-tree'
 import { getCurrency } from '../API/currency'
 import { reaction, when } from 'mobx'

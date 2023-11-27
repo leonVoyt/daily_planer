@@ -1,4 +1,3 @@
-// CurrencyStore.js
 import { types, getSnapshot, applySnapshot } from 'mobx-state-tree'
 import { reaction, when } from 'mobx'
 

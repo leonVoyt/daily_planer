@@ -26,32 +26,6 @@ const Settings = () => {
 
 export default Settings
 
-export const expensesOptions = [
-  {
-    id: 0,
-    name: '--Select--',
-  },
-  {
-    id: 1,
-    name: 'Rent',
-  },
-  {
-    id: 2,
-    name: 'Food',
-  },
-  {
-    id: 3,
-    name: 'Entertainment',
-  },
-  {
-    id: 4,
-    name: 'Transport',
-  },
-  {
-    id: 5,
-    name: 'Other',
-  },
-]
 export const months = [
   'January',
   'February',
