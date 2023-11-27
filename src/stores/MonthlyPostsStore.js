@@ -28,11 +28,6 @@ const MonthlyPostsEntry = types
       return self.monthlyPost.income - self.monthlyPost.expenses
     },
   }))
-  .actions((self) => ({
-    remove() {
-      getParent(self, 2).remove(self)
-    },
-  }))
 
 export const MonthlyPostsStore = types
   .model('MonthlyPostsStore', {
@@ -82,8 +77,11 @@ export const MonthlyPostsStore = types
       if (notify) self.budget.alert('Added to Statistics')
     },
 
-    remove(book) {
-      destroy(book)
+    remove(month) {
+      let isAlreadyExist = self.entries.find(
+        (el) => el.monthlyPost.month === month
+      )
+      destroy(isAlreadyExist)
     },
     clear() {
       self.entries.clear()

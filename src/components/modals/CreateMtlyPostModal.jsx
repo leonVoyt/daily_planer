@@ -71,7 +71,7 @@ const CreateMtlyPostModal = inject('budget')(
         onClick={() => setShowModal(false)}
       >
         <div
-          className=" relative border-2 border-white w-1/2 h-1/2 flex flex-col items-center justify-around rounded-md bg-blue-600 text-white"
+          className=" relative border-2 border-white w-1/2 h-1/2 flex flex-col items-center justify-around rounded-md bg-blue-600 text-white "
           onClick={(e) => e.stopPropagation()}
         >
           <h1 className="font-bold text-xl">{selectedMonth}</h1>
@@ -117,17 +117,18 @@ const CreateMtlyPostModal = inject('budget')(
             </div>
           </div>
           <div>
-            <label>Select Month: </label>
+            <label htmlFor="selectMonth">Select Month: </label>
             <select
               onChange={handleChange}
+              id="selectMonth"
               value={selectedMonth}
-              className="bg-transparent"
+              className="bg-transparent cursor-pointer"
             >
               {monthsList.map((el) => (
                 <option
                   value={el}
                   key={el}
-                  className="bg-transparent text-blue-600"
+                  className="bg-transparent text-blue-600 "
                 >
                   {el}
                 </option>
@@ -135,7 +136,7 @@ const CreateMtlyPostModal = inject('budget')(
             </select>
           </div>
           <button
-            className="bg-white text-black py-1.5 px-3 rounded-3xl hover:bg-yellow-500  bottom-0 "
+            className="bg-green-600 py-1.5 px-3 rounded-3xl hover:bg-green-400  "
             onClick={handleClick}
           >
             Add to statistics

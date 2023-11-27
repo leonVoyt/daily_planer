@@ -55,55 +55,8 @@ const Statistics = inject('budget')(
   })
 )
 
-const monthlyPostsEntry = inject('budget')(
-  observer(({ budget, entry }) => {
-    return (
-      <div className="border-2 border-gray-600">
-        <p>
-          <a
-            href={`/book/${entry.monthlyPost.id}`}
-            onClick={onEntryClick.bind(entry, budget)}
-          >
-            {entry.monthlyPost.name}
-          </a>
-          <div className="flex gap-5">
-            <button onClick={() => entry.remove()}>Remove</button>
-            <button
-              onClick={() =>
-                budget.monthlyPosts.editMonthly(entry.monthlyPost.id)
-              }
-            >
-              editMonthly
-            </button>
-          </div>
-        </p>
-
-        <div className="Page-monthlyPosts-item-details">
-          <p>
-            Amount: total expenses: <b>{entry.monthlyPost.expenses} €</b>
-          </p>
-          <p>
-            total income: <b>{entry.monthlyPost.income} €</b>
-          </p>
-        </div>
-      </div>
-    )
-  })
-)
-
-function onEntryClick(budget, e) {
-  budget.view.openBookPage(this.monthlyPost)
-  e.preventDefault()
-  return false
-}
-
 export default Statistics
 
 export const getColor = (value) => {
   return value > 0 ? 'text-green-600' : 'text-red-600'
 }
-
-//to do
-// 1 key problem
-// 2 update only where !=0
-// 3 Create modal for create new post

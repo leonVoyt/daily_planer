@@ -2,14 +2,14 @@ import React from 'react'
 
 const Instructions = () => {
   return (
-    <section className="w-screen flex min-h-screen pt-14 overflow-y-hidden">
-      <div className="w-3/5 flex items-center justify-start flex-col  bg-gray-200 rounded-lg">
-        <h1 className="text-4xl font-bold mb-8 text-blue-600">Instructions</h1>
+    <section className="w-screen flex min-h-screen pt-14 overflow-y-hidden ">
+      <div className="w-3/5 flex items-center justify-start flex-col text-gray-600 bg-pink-100 rounded-lg">
+        <h1 className="text-4xl font-bold mb-8 ">Instructions</h1>
         <div className="mx-8">
           <h2 className="text-2xl font-semibold mb-6">
             Welcome to the Budget Calculator App!
           </h2>
-          <ul className="list-decimal text-gray-800">
+          <ul className="list-decimal">
             <li className="mb-4">
               <span className="font-bold">1. Authorization Page:</span> Visit
               the app and go to the "Authorization" page. Use the following
@@ -73,9 +73,9 @@ const Instructions = () => {
         </div>
       </div>
 
-      <div className="w-2/5 flex items-center justify-start flex-col  rounded-lg bg-gray-100">
-        <h1 className="text-3xl font-bold mb-6 text-blue-600">Technology</h1>
-        <div className="text-lg text-gray-800">
+      <div className="w-2/5 flex items-center justify-start flex-col text-gray-600 rounded-lg bg-green-100">
+        <h1 className="text-3xl font-bold mb-6 ">Technology</h1>
+        <div className="text-lg ">
           <ul className="list-disc pl-5 mb-4">
             <li>React</li>
             <li>Mobx-state-tree</li>
